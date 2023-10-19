@@ -19,7 +19,7 @@ public class Page extends javax.swing.JFrame {
         initComponents();
     }
     
-    public int Total_Harga;
+    public float Total_Harga;
     
     public void reset(){
         dropdown.setSelectedItem("Pilih Jenis");
@@ -105,6 +105,7 @@ public class Page extends javax.swing.JFrame {
         });
         jPanel1.add(bayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 200, 30));
 
+        harga.setEditable(false);
         harga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hargaActionPerformed(evt);
@@ -124,6 +125,7 @@ public class Page extends javax.swing.JFrame {
         });
         jPanel1.add(berat, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 200, 30));
 
+        totalharga.setEditable(false);
         totalharga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 totalhargaActionPerformed(evt);
@@ -176,9 +178,15 @@ public class Page extends javax.swing.JFrame {
         if (bayar.getText().isEmpty() || harga.getText().isEmpty() || berat.getText().isEmpty()){ 
             JOptionPane.showMessageDialog(null, "Data Harus Diisi");
         } else {
-            int pembayaran = Integer.parseInt(bayar.getText());
-                    int kembalian = pembayaran-Total_Harga;
-                    JOptionPane.showMessageDialog(null, "Kembalian Anda : \n" + kembalian);
+            float pembayaran = Float.parseFloat(bayar.getText());
+                    float kembalian = pembayaran-Total_Harga;
+                    double kembalianformat = Double.parseDouble(String.valueOf(kembalian));
+                    if (pembayaran >= Total_Harga) {
+                JOptionPane.showMessageDialog(null, "Kembalian Anda : \n" + kembalianformat);
+            } else {
+                        JOptionPane.showMessageDialog(null, "Uang Anda Kurang : \n" + kembalianformat);
+            }
+                    
                     reset();
         }
         // TODO add your handling code here:
@@ -204,12 +212,13 @@ public class Page extends javax.swing.JFrame {
 
     private void beratKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_beratKeyReleased
         if (berat.getText().equals("")) {
-            harga.setText("0");
+            totalharga.setText("0");
         } else {
-            int harga1 = Integer.parseInt(harga.getText());
-            int berat1 = Integer.parseInt(berat.getText());
+            float harga1 = Float.parseFloat(harga.getText());
+            float berat1 = Float.parseFloat(berat.getText());
             Total_Harga = harga1*berat1;
-            totalharga.setText(String.valueOf(Total_Harga));
+            double totalformat = Double.parseDouble(String.valueOf(Total_Harga));
+            totalharga.setText(String.valueOf(totalformat));
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_beratKeyReleased
